@@ -12,7 +12,7 @@ func main(){
 	if err != nil{
 		log.Panicf("Error Creating Asset: %v", err)
 	}
-	if err = ReflectChaincode.Start(); if err != nil{
+	err = ReflectChaincode.Start(); if err != nil{
 		log.Panicf("Error Starting chaincode: %v", err)
 	}
 }
