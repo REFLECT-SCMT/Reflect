@@ -254,16 +254,16 @@ func (sc *SmartContract) QueryAllAssets(ctx contractapi.TransactionContextInterf
 	}
 	defer resultsIterator.Close()
 
-	var asset []*Asset
+	var assets []*Asset
 	for resultsIterator.HasNext(){
 		querResponse, err := resultsIterator.Next(); if err != nil{
 			return nil, err
 		}
-		var asset *Asset
+		var asset Asset
 		err = json.Unmarshal(querResponse.Value, &asset); if err != nil{
 			return nil, err
 		}
-		assets := append(assets, asset)
+		assets := append(assets, &asset)
 	}
 	return assets, nil
 }
