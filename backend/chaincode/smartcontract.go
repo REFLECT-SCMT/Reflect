@@ -50,11 +50,8 @@ func (sc *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface)
 	}
 
 	for _, asset := range assets{
-		assetJson, err := json.Marshal(asset);if err != nil{
-			return err
-		}
-
-		err = ctx.GetStub().PutStub(asset.ID, assetJson); if err != nil{
+		err := sc.CreateAsset(ctx, asset.ID, asset.Owner, asset.AssetType, asset.Quantity, asset.AppraisedValue)
+		if err != nil{
 			return err
 		}
 	}
@@ -94,7 +91,7 @@ func (sc *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, 
 		return nil, fmt.Errorf("Asset %s does not exist", id)
 	}
 
-	var asset *Asset
+	var asset Asset
 	err = json.Unmarshal(assetJson,&asset); if err != nil{
 		return nil, err
 	}
@@ -191,13 +188,21 @@ func (sc *SmartContract) QueryResponseFromIterator(resultsIterator shim.SateQuer
 		queryResults, err := resultsIterator.Next(); if err != nil{
 			return nil, err
 		}
-		var asset Asset
+		var assets Asset
 		err =json.Unmarshal(queryResults.Value, &asset)
-	}
-	return &asset, nil
+		if err != nil{
+			return err
+		}
+		assets = append(assets, &assest)
+	}	
+	return assets, nil
 }
 
-func (sc *SmartContract) GetAssetByRange(ctx contractapi.TransactionContextInterface, startkey, endkey string) ([]*Asset, error){
+func (sc *SimpleChaincode) QueryAssets(ctx contractapi.TransactionContextInterface, queryString string) ([]*Asset, error) {
+	return getQueryResultForQueryString(ctx, queryString)
+}
+
+func (sc *SmartContract) GetAssetsByRange(ctx contractapi.TransactionContextInterface, startkey, endkey string) ([]*Asset, error){
 	resultsIterator, err := ctx.GetStub().GetAssetByRange(startkey, endkey); if err != nil{
 		return nil, err
 	}
@@ -206,13 +211,9 @@ func (sc *SmartContract) GetAssetByRange(ctx contractapi.TransactionContextInter
 	return QueryResponseFromIterator(resultsIterator)
 }
 
-func (sc *SmartContract) QueryAssetByOwner(ctx contractapi.TransactionContextInterface, owner string) ([]*Asset, error){
+func (sc *SmartContract) QueryAssetsByOwner(ctx contractapi.TransactionContextInterface, owner string) ([]*Asset, error){
 	queryString, err := fmt.Sprintf(`{"selector":{"owner": "%s"}}`, owner)
 	return getQueryResultForQueryString(queryString)
-}
-
-func (sc *SimpleChaincode) QueryAssets(ctx contractapi.TransactionContextInterface, queryString string) ([]*Asset, error) {
-	return getQueryResultForQueryString(ctx, queryString)
 }
 
 func (sc *SmartContract) getQueryResultForQueryString(ctx contractapi.TransactionContextInterface,queryString string) ([]*Asset, error){
@@ -220,13 +221,13 @@ func (sc *SmartContract) getQueryResultForQueryString(ctx contractapi.Transactio
 		return err
 	}
 	defer resultsIterator.Close()
-
 	return QueryResponseFromIterator(resultsIterator)
 }
 
-func (sc *SmartContract) getAssetWithPagination(ctx contractapi.TransactionContextInterface, queryString, bookmark string, pageSize int) (*PaginatedQuery, error){
+func (sc *SmartContract) getAssetsWithPagination(ctx contractapi.TransactionContextInterface, queryString, bookmark string, pageSize int) (*PaginatedQuery, error){
 	return getQueryResultForQueryStringWithPagination(ctx, queryString, bookmark, int32(pageSize))
 }
+
 
 func (sc *SmartContract) getQueryResultForQueryStringWithPagination(ctx contractapi.TransactionContextInterface, queryString, bookmark string, pageSize int32) (*PaginatedQuery, error){
 	resultsIterator, responseMetadata, err := ctx.GetStub().GetQueryResultWithPagination(queryString,pageSize, bookmark)
@@ -246,7 +247,7 @@ func (sc *SmartContract) getQueryResultForQueryStringWithPagination(ctx contract
 	}, nil
 }
 
-func (sc *SmartContract) QueryAllAsset(ctx contractapi.TransactionContextInterface) ([]Asset, error){
+func (sc *SmartContract) QueryAllAssets(ctx contractapi.TransactionContextInterface) ([]*Asset, error){
 	resultsIterator, err := ctx.GetStub().GetStateByRange("","")
 	if err != nil{
 		return nil, err
@@ -267,7 +268,7 @@ func (sc *SmartContract) QueryAllAsset(ctx contractapi.TransactionContextInterfa
 	return assets, nil
 }
 
-func (sc *SimpleChaincode) GetAssetHistory(ctx contractapi.TransactionContextInterface, id string) ([]HistoryQuery, error) {
+func (sc *SimpleChaincode) GetAssetsHistory(ctx contractapi.TransactionContextInterface, id string) ([]HistoryQuery, error) {
 	resultsIterator, err := ctx.GetStub().GetHistoryForKey(id); if err != nil {
 		return nil, err
 	}
