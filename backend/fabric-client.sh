@@ -1,6 +1,6 @@
 # export the trusted certificate before using the command
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/tls-ca/crypto/tls-ca-cert.pem
-export FABRIC_CA_CLIENT_HOME=/tmp/hyperledger/tls-ca/admin
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/tls-ca/crypto/tls-ca-cert.pem
+export FABRIC_CA_CLIENT_HOME=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/tls-ca/admin
 export FABRIC_CA_CLIENT_MSPDIR=msp
 export FABRIC_CA_CLIENT_MSPDIR=tls-msp
 
@@ -45,21 +45,21 @@ fabric-ca-client enroll -d -u https://peer1-org1:peer1pw@0.0.0.0:7054
 
 #it is assume that certificate of TLS CA  has been copied  to the path given below
 export FABRIC_CA_CLIENT_MSPDIR=tls-msp
-export FABRIC_CA_CLIENT_HOME=/tmp/hyperledger/org1/peer2
+export FABRIC_CA_CLIENT_HOME=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/peer2
 
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org1/peer1/assets/tls-ca/tls-ca-cert.pem
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/peer1/assets/tls-ca/tls-ca-cert.pem
 fabric-ca-client enroll -d -u https://peer1-org1:peer1pw@0.0.0.0:7052 --enrollment.profile tls --csr.hosts peer1-org1
-#Go to path /tmp/hyperledger/org1/peer1/tls-msp/keystore and change the name of the key to key.pem
+#Go to path $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/peer1/tls-msp/keystore and change the name of the key to key.pem
 
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org1/peer2/assets/tls-ca/tls-ca-cert.pem
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/peer2/assets/tls-ca/tls-ca-cert.pem
 fabric-ca-client enroll -d -u https://peer2-org1:peer2pw@0.0.0.0:7052 --enrollment.profile tls --csr.hosts peer2-org1
-#Go to path /tmp/hyperledger/org1/peer2/tls-msp/keystore and change the name of the key to key.pem.
+#Go to path $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/peer2/tls-msp/keystore and change the name of the key to key.pem.
 
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org1/peer2/assets/ca/org1-ca-cert.pem
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/peer2/assets/ca/org1-ca-cert.pem
 fabric-ca-client enroll -d -u https://peer2-org1:peer2pw@0.0.0.0:7054
 
-export FABRIC_CA_CLIENT_HOME=/tmp/hyperledger/org1/admin
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org1/peer1/assets/ca/org1-ca-cert.pem
+export FABRIC_CA_CLIENT_HOME=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/admin
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/peer1/assets/ca/org1-ca-cert.pem
 fabric-ca-client enroll -d -u https://admin-org1:org1Adminpw@0.0.0.0:7054
 
 #After enrollment, you should have an admin MSP
@@ -69,26 +69,26 @@ fabric-ca-client enroll -d -u https://admin-org1:org1Adminpw@0.0.0.0:7054
 #and it will need to go in to the admincerts folder of each peers’ MSP.
 #The command below is only for Peer1, the exchange of the admin certificate to Peer2 will happen out-of-band.
 #If the admincerts folder is missing from the peer’s local MSP, the peer will fail to start up.
-mkdir /tmp/hyperledger/org1/peer1/msp/admincerts
-cp /tmp/hyperledger/org1/admin/msp/signcerts/cert.pem /tmp/hyperledger/org1/peer1/msp/admincerts/org1-admin-cert.pem
+mkdir $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/peer1/msp/admincerts
+cp $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/admin/msp/signcerts/cert.pem $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org1/peer1/msp/admincerts/org1-admin-cert.pem
 
 
-export FABRIC_CA_CLIENT_HOME=/tmp/hyperledger/org2/peer1
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org2/peer1/assets/ca/org2-ca-cert.pem
+export FABRIC_CA_CLIENT_HOME=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer1
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer1/assets/ca/org2-ca-cert.pem
 fabric-ca-client enroll -d -u https://peer1-org2:peer1pw@0.0.0.0:7055
 
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org2/peer1/assets/tls-ca/tls-ca-cert.pem
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer1/assets/tls-ca/tls-ca-cert.pem
 fabric-ca-client enroll -d -u https://peer1-org2:peer1pw@0.0.0.0:7052 --enrollment.profile tls --csr.hosts peer1-org2
-#Go to path /tmp/hyperledger/org2/peer1/tls-msp/keystore and change the name of the key to key.pem
+#Go to path $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer1/tls-msp/keystore and change the name of the key to key.pem
 
-export FABRIC_CA_CLIENT_HOME=/tmp/hyperledger/org2/peer2
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org2/peer2/assets/ca/org2-ca-cert.pem
+export FABRIC_CA_CLIENT_HOME=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer2
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer2/assets/ca/org2-ca-cert.pem
 fabric-ca-client enroll -d -u https://peer2-org2:peer2pw@0.0.0.0:7055
 
 
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org2/peer2/assets/tls-ca/tls-ca-cert.pem
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer2/assets/tls-ca/tls-ca-cert.pem
 fabric-ca-client enroll -d -u https://peer2-org2:peer2pw@0.0.0.0:7052 --enrollment.profile tls --csr.hosts peer2-org2
-#Go to path /tmp/hyperledger/org2/peer2/tls-msp/keystore and change the name of the key to key.pem
+#Go to path $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer2/tls-msp/keystore and change the name of the key to key.pem
 
 
 #At this point, you will have two MSP directories
@@ -97,8 +97,8 @@ fabric-ca-client enroll -d -u https://peer2-org2:peer2pw@0.0.0.0:7052 --enrollme
 #and this is the admincerts folder. This folder will contain certificates for the administrator of Org2
 #The steps below will enroll the admin
 #In the commands below, we will assume that they are being executed on Peer1’s host machine.
-export FABRIC_CA_CLIENT_HOME=/tmp/hyperledger/org2/admin
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org2/peer1/assets/ca/org2-ca-cert.pem
+export FABRIC_CA_CLIENT_HOME=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/admin
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer1/assets/ca/org2-ca-cert.pem
 fabric-ca-client enroll -d -u https://admin-org2:org2Adminpw@0.0.0.0:7055
 
 #After enrollment, you should have an admin MSP
@@ -106,30 +106,30 @@ fabric-ca-client enroll -d -u https://admin-org2:org2Adminpw@0.0.0.0:7055
 #The commands below are only for Peer1
 #the exchange of admin cert to peer2 will happen out-of-band.
 #If the admincerts folder is missing from the peer’s local MSP, the peer will fail to start up.
-mkdir /tmp/hyperledger/org2/peer1/msp/admincerts
-cp /tmp/hyperledger/org2/admin/msp/signcerts/cert.pem /tmp/hyperledger/org2/peer1/msp/admincerts/org2-admin-cert.pem
+mkdir $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer1/msp/admincerts
+cp $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/admin/msp/signcerts/cert.pem $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org2/peer1/msp/admincerts/org2-admin-cert.pem
 
 #You will issue the commands below to get the orderer enrolled
 #In the commands below, we will assume the trusted root certificates for Org0 is available in 
-#/tmp/hyperledger/org0/orderer/assets/ca/org0-ca-cert.pem
-export FABRIC_CA_CLIENT_HOME=/tmp/hyperledger/org0/orderer
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org0/orderer/assets/ca/org0-ca-cert.pem
+#$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/orderer/assets/ca/org0-ca-cert.pem
+export FABRIC_CA_CLIENT_HOME=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/orderer
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/orderer/assets/ca/org0-ca-cert.pem
 fabric-ca-client enroll -d -u https://orderer1-org0:ordererpw@0.0.0.0:7053
 
 #Next, you will get the TLS certificate. In the command below
 #we will assume the certificate of the TLS CA has been copied to
-#/tmp/hyperledger/org0/orderer/assets/tls-ca/tls-ca-cert.pem 
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org0/orderer/assets/tls-ca/tls-ca-cert.pem
+#$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/orderer/assets/tls-ca/tls-ca-cert.pem 
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/orderer/assets/tls-ca/tls-ca-cert.pem
 fabric-ca-client enroll -d -u https://orderer1-org0:ordererpw@0.0.0.0:7052 --enrollment.profile tls --csr.hosts orderer1-org0
-#Go to path /tmp/hyperledger/org0/orderer/tls-msp/keystore and change the name of the key to key.pem
+#Go to path $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/orderer/tls-msp/keystore and change the name of the key to key.pem
 
 #ENROLL ORG0'S ADMIN
-export FABRIC_CA_CLIENT_HOME=/tmp/hyperledger/org0/admin
-export FABRIC_CA_CLIENT_TLS_CERTFILES=/tmp/hyperledger/org0/orderer/assets/ca/org0-ca-cert.pem
+export FABRIC_CA_CLIENT_HOME=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/admin
+export FABRIC_CA_CLIENT_TLS_CERTFILES=$GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/orderer/assets/ca/org0-ca-cert.pem
 fabric-ca-client enroll -d -u https://orderer-org0-admin:ordererAdminpw@0.0.0.0:7053
 
-#After enrollment, you should have an msp folder at /tmp/hyperledger/org0/admin
+#After enrollment, you should have an msp folder at $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/admin
 #You will copy the certificate from this MSP and move it to the orderer’s MSP under the admincerts folder.
-mkdir /tmp/hyperledger/org0/orderer/msp/admincerts
-cp /tmp/hyperledger/org0/admin/msp/signcerts/cert.pem /tmp/hyperledger/org0/orderer/msp/admincerts/orderer-admin-cert.pem
+mkdir $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/orderer/msp/admincerts
+cp $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/admin/msp/signcerts/cert.pem $GOPATH/src/github.com/Reflect/backend/docker/hyperledger/org0/orderer/msp/admincerts/orderer-admin-cert.pem
 
