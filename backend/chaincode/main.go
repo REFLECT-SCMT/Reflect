@@ -1,18 +1,18 @@
 package main
 
-import(
+import (
 	"log"
 
-	"github.com/hyperledger/fabric-contract-api/contractapi"
-	"github.com/hyperledger/Reflect/backend/chaincode"
+	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
-func main(){
+func main() {
 	ReflectChaincode, err := contractapi.NewChaincode(&chaincode.SmartContract{})
-	if err != nil{
+	if err != nil {
 		log.Panicf("Error Creating Asset: %v", err)
 	}
-	err = ReflectChaincode.Start(); if err != nil{
+	err = ReflectChaincode.Start()
+	if err != nil {
 		log.Panicf("Error Starting chaincode: %v", err)
 	}
 }

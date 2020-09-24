@@ -7,7 +7,7 @@ import(
 
 	"github.com/golang/protobuf/ptypes"
 	"github.com/hyperledger/fabric-chaincode-go/shim"
-	"github.com/hyperledger/fabric-contract-api/contractapi"
+	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
 const index = "AssetType~desc"
@@ -41,12 +41,12 @@ type PaginatedQuery struct{
 
 func (sc *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error{
 	assets := []Asset{
-		{ID: "asset1", Owner: "Tomoko",AssetType: "household" Quantity: 10, AppraisedValue: 300},
-		{ID: "asset2", Owner: "Brad",AssetType: "industry" Quantity: 6, AppraisedValue: 400},
-		{ID: "asset3", Owner: "Jin Soo",AssetType: "industry" Quantity: 18, AppraisedValue: 500},
-		{ID: "asset4", Owner: "Max",AssetType: "household" Quantity: 2, AppraisedValue: 600},
-		{ID: "asset5", Owner: "Adriana",AssetType: "mines" Quantity: 26, AppraisedValue: 700},
-		{ID: "asset6", Owner: "Michel",AssetType: "mines" Quantity: 8, AppraisedValue: 800},
+		{ID: "asset1", Owner: "Tomoko",AssetType: "household", Quantity: 10, AppraisedValue: 300},
+		{ID: "asset2", Owner: "Brad",AssetType: "industry", Quantity: 6, AppraisedValue: 400},
+		{ID: "asset3", Owner: "Jin Soo",AssetType: "industry", Quantity: 18, AppraisedValue: 500},
+		{ID: "asset4", Owner: "Max",AssetType: "household", Quantity: 2, AppraisedValue: 600},
+		{ID: "asset5", Owner: "Adriana",AssetType: "mines", Quantity: 26, AppraisedValue: 700},
+		{ID: "asset6", Owner: "Michel",AssetType: "mines", Quantity: 8, AppraisedValue: 800},
 	}
 
 	for _, asset := range assets{
