@@ -15,7 +15,7 @@ const index = "AssetType~desc"
 type SmartContract struct{
 	contractapi.Contract
 }
-
+ 
 type Asset struct{
 	ID string `json:"ID"`
 	Owner string `json:"Owner"`
@@ -296,7 +296,6 @@ func (sc *SimpleChaincode) GetAssetsHistory(ctx contractapi.TransactionContextIn
 			Deleted:  response.Deleted,
 		}
 		records = append(records, record)
-	}
 
 	return records, nil
 }

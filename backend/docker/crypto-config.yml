@@ -11,9 +11,9 @@ OrdererOrgs:
     # ---------------------------------------------------------------------------
     Specs:
       - Hostname: orderer1
-      #   SANS:
-      #       - "localhost"
-      #       - "127.0.0.1"
+        # SANS:
+        #     - "localhost"
+        #     - "127.0.0.1"
       # - Hostname: orderer2
       #   SANS:
       #     - "localhost"
@@ -49,11 +49,11 @@ PeerOrgs:
     EnableNodeOUs: true
 
     Template:
-      Count: 3
-      # Start: 5`
+      Count: 2
+      # Start: 5
       # Hostname: {{.Prefix}}{{.Index}} # default
       SANS:
         - "localhost"
 
     Users:
-      Count: 1
+      Count: 2
